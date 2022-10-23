@@ -46,25 +46,10 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
         prefEditor = settings.edit();
         macAddress = settings.getString("macAddress", "fc:aa:14:ba:50:1d");
 
-
         buttonOff = findViewById(R.id.buttonOff);
         buttonSleep = findViewById(R.id.buttonSleep);
         buttonHibernate = findViewById(R.id.buttonHibernate);
         buttonOn = findViewById(R.id.buttonOn);
-
-//        editTextMacAddress = findViewById(R.id.editTextMacAddress);
-//        editTextMacAddress.setText(macAddress);
-//        editTextMacAddress.addTextChangedListener(new TextWatcher() {
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//            }
-//
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//            }
-//        });
 
         socketTread();
 
@@ -96,8 +81,8 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
                                 socket.send(sendPacket);
 
 
-                                byte[] recvBuf = new byte[256];
-                                DatagramPacket receivePacket = new DatagramPacket(recvBuf, recvBuf.length);
+                                byte[] dataByte = new byte[256];
+                                DatagramPacket receivePacket = new DatagramPacket(dataByte, dataByte.length);
                                 socket.receive(receivePacket);
                                 data = new String(receivePacket.getData()).trim();
 
@@ -123,9 +108,9 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void onGetResult(GetResult event) {
-        String messege = event.getMessege();
+        String message = event.getMessage();
 
-        switch (messege) {
+        switch (message) {
             case "TestPass":
                 buttonOff.setEnabled(true);
                 buttonSleep.setEnabled(true);
