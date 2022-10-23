@@ -19,7 +19,7 @@
             android:layout_marginBottom="35dp"
             android:gravity="center_horizontal"
             android:padding="10dp"
-            android:text="Введите MAC-адрес выключаемого компьютера"
+            android:text="Введите MAC-адрес включаемого компьютера"
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold" />
