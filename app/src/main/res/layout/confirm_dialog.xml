@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rounded_corner_white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textViewTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="35dp"
+            android:gravity="center_horizontal"
+            android:padding="10dp"
+            android:text="йцу"
+            android:textColor="?attr/colorOnSecondary"
+            android:textSize="32sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/buttonAccept"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginVertical="3dp"
+            android:insetLeft="6dp"
+            android:insetRight="6dp"
+            android:backgroundTint="?attr/colorOnSecondary"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:text="Подтвердить"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:cornerRadius="35dp" />
+
+        <Button
+            android:id="@+id/buttonCancel"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginVertical="3dp"
+            android:insetLeft="6dp"
+            android:backgroundTint="?attr/colorOnSecondary"
+            android:textColor="?attr/colorSecondaryVariant"
+            android:insetRight="6dp"
+            android:text="Отмена"
+            android:textAllCaps="false"
+            android:textSize="20sp"
+            app:cornerRadius="35dp" />
+    </LinearLayout>
+</LinearLayout>
