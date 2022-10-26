@@ -2,6 +2,8 @@ package com.example.pccontrol;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -9,10 +11,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -52,22 +50,26 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
         buttonOn = findViewById(R.id.buttonOn);
 
         socketTread();
-
-        EventBus.getDefault().register(this);
     }
 
-
     public void socketTread() {
-        new Thread(new Runnable() {
-            @Override
+        Runnable runnable = new Runnable() {
             public void run() {
+                boolean connectionTest = false;
+                DatagramSocket socket = null;
                 while (true) {
                     try {
-                        DatagramSocket socket = new DatagramSocket(5005);
+                        Message msg = handler.obtainMessage();
+                        Bundle bundle = new Bundle();
+                        if (socket!= null && !socket.isClosed()) {
+                            socket.close();
+                        }
+
+                        socket = new DatagramSocket(5005);
                         socket.setBroadcast(true);
                         socket.setSoTimeout(250);
 
-                        String data;
+                        String data = "";
                         while (true) {
                             try {
                                 byte[] buffer;
@@ -86,13 +88,21 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
                                 socket.receive(receivePacket);
                                 data = new String(receivePacket.getData()).trim();
 
+//                                if (data = "TestPass"){
+//                                    if (!connectionTest){
+//                                    connectionTest = true;}
+//                                }
+
                             } catch (Exception ex) {
                                 data = "Failed";
 //                                Log.e(LOG_TAG, Log.getStackTraceString(ex));
                                 Log.e(LOG_TAG, ex.getMessage());
                             }
 
-                            EventBus.getDefault().postSticky(new GetResult(data));
+                            bundle.putString("message", data);
+                            msg = handler.obtainMessage();
+                            msg.setData(bundle);
+                            handler.sendMessage(msg);
 
                             SystemClock.sleep(250);
                         }
@@ -100,42 +110,49 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
 //                        Log.e(LOG_TAG, Log.getStackTraceString(ex));
                         Log.e(LOG_TAG, ex.getMessage());
                     }
+                    SystemClock.sleep(250);
                 }
             }
-        }).start();
+        };
+
+        Thread thread = new Thread(runnable);
+        thread.start();
     }
 
+    Handler handler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            Bundle bundle = msg.getData();
+            String message = bundle.getString("message");
 
-    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
-    public void onGetResult(GetResult event) {
-        String message = event.getMessage();
+            switch (message) {
+                case "TestPass":
+                    buttonOff.setEnabled(true);
+                    buttonSleep.setEnabled(true);
+                    buttonHibernate.setEnabled(true);
+                    break;
 
-        switch (message) {
-            case "TestPass":
-                buttonOff.setEnabled(true);
-                buttonSleep.setEnabled(true);
-                buttonHibernate.setEnabled(true);
-                break;
+                case "OffSuccess":
+                    Toast.makeText(getApplicationContext(), "Компьютер выключен", Toast.LENGTH_SHORT).show();
+                    break;
 
-            case "OffSuccess":
-                Toast.makeText(getApplicationContext(), "Компьютер выключен", Toast.LENGTH_SHORT).show();
-                break;
+                case "SleepSuccess":
+                    Toast.makeText(getApplicationContext(), "Компьютер переведен в спящий режим", Toast.LENGTH_SHORT).show();
+                    break;
 
-            case "SleepSuccess":
-                Toast.makeText(getApplicationContext(), "Компьютер переведен в сон", Toast.LENGTH_SHORT).show();
-                break;
+                case "HibernateSuccess":
+                    Toast.makeText(getApplicationContext(), "Компьютер переведен в гибернацию", Toast.LENGTH_SHORT).show();
+                    break;
 
-            case "HibernateSuccess":
-                Toast.makeText(getApplicationContext(), "Компьютер переведен в гибернацию", Toast.LENGTH_SHORT).show();
-                break;
-
-            case "Failed":
-                buttonOff.setEnabled(false);
-                buttonSleep.setEnabled(false);
-                buttonHibernate.setEnabled(false);
-                break;
+                case "Failed":
+                    buttonOff.setEnabled(false);
+                    buttonSleep.setEnabled(false);
+                    buttonHibernate.setEnabled(false);
+                    break;
+            }
+            return true;
         }
-    }
+    });
 
     public void wakeOnLan() {
         new Thread(new Runnable() {
@@ -218,19 +235,19 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
                 break;
 
             case R.id.buttonOff:
-                showDialog("Компьютер будет выключен", "Off");
+                showDialog("Выключить", "Off");
                 break;
 
             case R.id.buttonSleep:
-                showDialog("Компьютер будет переведен в режим сна", "Sleep");
+                showDialog("Спящий режим", "Sleep");
                 break;
 
             case R.id.buttonHibernate:
-                showDialog("Компьютер будет переведен в гибернацию", "Hibernate");
+                showDialog("Гибернация", "Hibernate");
                 break;
 
             case R.id.buttonOn:
-                showDialog("Компьютер будет включен", "On");
+                showDialog("Включить", "On");
                 break;
 
         }

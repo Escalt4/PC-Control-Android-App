@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,6 +31,20 @@ public class ConfirmDialogFragment extends AppCompatDialogFragment {
         Button buttonCancel = (Button) view.findViewById(R.id.buttonCancel);
 
         textViewTitle.setText(title);
+        switch (command) {
+            case "Off":
+                textViewTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.off_icon_black, 0, 0, 0);
+                break;
+            case "Sleep":
+                textViewTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.sleep_icon_black, 0, 0, 0);
+                break;
+            case "Hibernate":
+                textViewTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.hibernate_icon_black, 0, 0, 0);
+                break;
+            case "On":
+                textViewTitle.setCompoundDrawablesWithIntrinsicBounds(R.drawable.on_icon_black, 0, 0, 0);
+                break;
+        }
 
         buttonAccept.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -53,5 +68,6 @@ public class ConfirmDialogFragment extends AppCompatDialogFragment {
 
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(R.color.transparent);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 }

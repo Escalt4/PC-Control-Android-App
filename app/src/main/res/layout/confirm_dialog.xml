@@ -3,8 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="21dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -17,9 +18,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="35dp"
-            android:gravity="center_horizontal"
+            android:drawableStart="@drawable/sleep_icon_black"
+            android:drawablePadding="15dp"
+            android:gravity="center_vertical"
             android:padding="10dp"
-            android:text="йцу"
+            android:text=""
             android:textColor="@color/black"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -29,12 +32,12 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginVertical="3dp"
+            android:backgroundTint="@color/black"
             android:insetLeft="6dp"
             android:insetRight="6dp"
-            android:backgroundTint="@color/black"
-            android:textColor="@color/white"
             android:text="Подтвердить"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:cornerRadius="35dp" />
 
@@ -43,12 +46,12 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:layout_marginVertical="3dp"
-            android:insetLeft="6dp"
             android:backgroundTint="@color/black"
-            android:textColor="@color/white"
+            android:insetLeft="6dp"
             android:insetRight="6dp"
             android:text="Отмена"
             android:textAllCaps="false"
+            android:textColor="@color/white"
             android:textSize="20sp"
             app:cornerRadius="35dp" />
     </LinearLayout>

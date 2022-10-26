@@ -32,7 +32,7 @@
                 android:textAllCaps="false"
                 android:textSize="16sp"
                 app:cornerRadius="35dp"
-                app:icon="@drawable/ic_settings"
+                app:icon="@drawable/settings_icon"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp" />
 
@@ -64,60 +64,76 @@
             android:gravity="bottom"
             android:orientation="vertical">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonOff"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginVertical="3dp"
                 android:enabled="false"
+                android:gravity="center_vertical"
                 android:insetLeft="6dp"
                 android:insetRight="6dp"
                 android:onClick="onClick"
                 android:text="Выключить"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:cornerRadius="35dp" />
+                app:cornerRadius="35dp"
+                app:icon="@drawable/off_icon"
+                app:iconGravity="start"
+                app:iconPadding="15dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonSleep"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginVertical="3dp"
                 android:enabled="false"
+                android:gravity="center_vertical"
                 android:insetLeft="6dp"
                 android:insetRight="6dp"
                 android:onClick="onClick"
-                android:text="Сон"
+                android:text="Спящий режим"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:cornerRadius="35dp" />
+                app:cornerRadius="35dp"
+                app:icon="@drawable/sleep_icon"
+                app:iconGravity="start"
+                app:iconPadding="15dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonHibernate"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginVertical="3dp"
                 android:enabled="false"
+                android:gravity="center_vertical"
                 android:insetLeft="6dp"
                 android:insetRight="6dp"
                 android:onClick="onClick"
                 android:text="Гибернация"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:cornerRadius="35dp" />
+                app:cornerRadius="35dp"
+                app:icon="@drawable/hibernate_icon"
+                app:iconGravity="start"
+                app:iconPadding="15dp" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonOn"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_marginVertical="3dp"
+                android:gravity="center_vertical"
                 android:insetLeft="6dp"
                 android:insetRight="6dp"
                 android:onClick="onClick"
                 android:text="Включить"
                 android:textAllCaps="false"
                 android:textSize="20sp"
-                app:cornerRadius="35dp" />
+                app:cornerRadius="35dp"
+                app:icon="@drawable/on_icon"
+                app:iconGravity="start"
+                app:iconPadding="15dp" />
 
         </LinearLayout>
 
