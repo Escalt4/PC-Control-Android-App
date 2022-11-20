@@ -26,12 +26,15 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
     SharedPreferences settings;
     SharedPreferences.Editor prefEditor;
 
+    Thread thread;
+
     Button buttonOff;
     Button buttonSleep;
     Button buttonHibernate;
     Button buttonOn;
 
     String macAddress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +58,19 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
     public void socketTread() {
         Runnable runnable = new Runnable() {
             public void run() {
-                boolean connectionTest = false;
                 DatagramSocket socket = null;
                 while (true) {
                     try {
                         Message msg = handler.obtainMessage();
                         Bundle bundle = new Bundle();
-                        if (socket!= null && !socket.isClosed()) {
+                        if (socket != null && !socket.isClosed()) {
                             socket.close();
                         }
 
                         socket = new DatagramSocket(5005);
                         socket.setBroadcast(true);
                         socket.setSoTimeout(250);
-
+                        String lastData = "";
                         String data = "";
                         while (true) {
                             try {
@@ -88,21 +90,20 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
                                 socket.receive(receivePacket);
                                 data = new String(receivePacket.getData()).trim();
 
-//                                if (data = "TestPass"){
-//                                    if (!connectionTest){
-//                                    connectionTest = true;}
-//                                }
-
                             } catch (Exception ex) {
                                 data = "Failed";
 //                                Log.e(LOG_TAG, Log.getStackTraceString(ex));
                                 Log.e(LOG_TAG, ex.getMessage());
                             }
 
-                            bundle.putString("message", data);
-                            msg = handler.obtainMessage();
-                            msg.setData(bundle);
-                            handler.sendMessage(msg);
+                            if (data != lastData) {
+                                lastData = data;
+
+                                bundle.putString("message", data);
+                                msg = handler.obtainMessage();
+                                msg.setData(bundle);
+                                handler.sendMessage(msg);
+                            }
 
                             SystemClock.sleep(250);
                         }
@@ -115,7 +116,7 @@ public class MainActivity extends AppCompatActivity implements DialogResult {
             }
         };
 
-        Thread thread = new Thread(runnable);
+        thread = new Thread(runnable);
         thread.start();
     }
 

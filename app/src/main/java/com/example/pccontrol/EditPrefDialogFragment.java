@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -54,5 +55,6 @@ public class EditPrefDialogFragment extends AppCompatDialogFragment {
 
         Window window = getDialog().getWindow();
         window.setBackgroundDrawableResource(R.color.transparent);
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
     }
 }
